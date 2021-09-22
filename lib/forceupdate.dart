@@ -22,8 +22,7 @@ class CheckVersion {
   String androidId;
   String iOSId;
 
-  CheckVersion({this.androidId, this.iOSId, @required this.context})
-      : assert(context != null);
+  CheckVersion({this.androidId, this.iOSId, @required this.context}) : assert(context != null);
 
   Future<AppVersionStatus> getVersionStatus({bool checkInBigger = true}) async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
@@ -72,16 +71,13 @@ class CheckVersion {
   alertIfAvailable(String androidApplicationId, String iOSAppId) async {
     AppVersionStatus versionStatus = await getVersionStatus();
     if (versionStatus != null && versionStatus.canUpdate) {
-      showUpdateDialog(androidApplicationId, iOSAppId,
-          versionStatus: versionStatus);
+      showUpdateDialog(androidApplicationId, iOSAppId, versionStatus: versionStatus);
     }
   }
 
-  getiOSAtStoreVersion(
-      String appId /**app id in apple store not app bundle id*/,
+  getiOSAtStoreVersion(String appId /**app id in apple store not app bundle id*/,
       AppVersionStatus versionStatus) async {
-    final response =
-        await http.get('http://itunes.apple.com/lookup?bundleId=$appId');
+    final response = await http.get(Uri.parse('http://itunes.apple.com/lookup?bundleId=$appId'));
     if (response.statusCode != 200) {
       print('The app with id: $appId is not found in app store');
       return null;
@@ -92,14 +88,12 @@ class CheckVersion {
     return versionStatus;
   }
 
-  getAndroidAtStoreVersion(
-      String applicationId /**application id, generally stay in build.gradle*/,
+  getAndroidAtStoreVersion(String applicationId /**application id, generally stay in build.gradle*/,
       AppVersionStatus versionStatus) async {
     final url = 'https://play.google.com/store/apps/details?id=$applicationId';
-    final response = await http.get(url);
+    final response = await http.get(Uri.parse(url));
     if (response.statusCode != 200) {
-      print(
-          'The app with application id: $applicationId is not found in play store');
+      print('The app with application id: $applicationId is not found in play store');
       return null;
     }
     final document = html.parse(response.body);
@@ -184,8 +178,7 @@ class OpenAppstore {
   static void launch(String androidApplicationId, String iOSAppId) async {
     _channel = MethodChannel('flutter.moum.open_appstore');
     await _channel.invokeMethod('openappstore', {
-      'android_id':
-          androidApplicationId, // eexamplex : com.company.projectName,
+      'android_id': androidApplicationId, // eexamplex : com.company.projectName,
       'ios_id': iOSAppId //example :id1234567890
     });
   }

@@ -1,3 +1,8 @@
+# Information
+
+This package is forked from [original package](https://github.com/SidaHoil/force_update). as the original project is not maintained or outdated, we have made the changes to keep it updated for use in Flutter 2.2.3
+Dt: 09-22-2021
+
 # forceupdate
 
 This package is use for check new version available both ios and android. If it has a new version, you can link to app store or play store. But you need to know app id in store first.
@@ -7,15 +12,19 @@ See more at the [Dart Packages page.](https://pub.dartlang.org/packages/new_vers
 ![Screenshots](screenshots/ios.png)!
 
 ## Installation
+
 Add force_update as a dependency in your pubspec.yaml file.
+
 ```dependencies:
       forceupdate: ^0.0.5
 ```
 
 ## Usage
+
 In `main.dart` (or wherever your app is initialized), create an instance of `CheckVersion` using your current build context.
 `final checkVersion = CheckVersion(context: context);`.
 Then now you can get app version status by add this line :
+
 ```
 final appStatus = await checkVersion.getVersionStatus();
 if (appStatus.canUpdate) {
